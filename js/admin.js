@@ -14,7 +14,6 @@ import {
   REJECTED_REASONS,
   SLA_FILTERS,
   STATUS_LABELS,
-  STATUS_TRANSITIONS,
   PUBLIC_EXPORT_FIELDS,
   ADMIN_EXPORT_FIELDS,
   CONFIG
@@ -271,12 +270,9 @@ function addReadOnlyField(label, value) {
 
 function setStatusOptions(item) {
   const current = item.Status || 'New';
-  const options = [current, ...(STATUS_TRANSITIONS[current] || [])];
-  fillSelect(detailForm.elements.Status, options, null);
+  fillSelect(detailForm.elements.Status, ALL_STATUSES, null);
   detailForm.elements.Status.value = current;
-  statusHelp.textContent = (STATUS_TRANSITIONS[current] || []).length
-    ? `Доступные переходы: ${(STATUS_TRANSITIONS[current] || []).map((status) => STATUS_LABELS[status] || status).join(', ')}`
-    : 'Дальнейшие переходы для этого статуса закрыты.';
+  statusHelp.textContent = 'Можно выбрать любой статус. Обязательные поля проверяются по выбранному статусу.';
 }
 
 function setFormValues(item) {
